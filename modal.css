@@ -1,0 +1,40 @@
+/* Modal background overlay */
+.project-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+/* Modal box */
+.modal-content {
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  background: #1c1f24;
+  border-radius: 20px;
+  padding: 30px;
+  overflow-y: auto;
+  position: relative;
+  color: white;
+}
+
+/* Close button */
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 3rem;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #00ffee;
+}
