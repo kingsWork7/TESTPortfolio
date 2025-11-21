@@ -72,24 +72,23 @@ document.addEventListener("DOMContentLoaded", () => {
 // });
 
 
-const form = document.getElementById('contact-form'); // updated to match new form ID
+const form = document.getElementById('contact-form');
 const submitBtn = form.querySelector('input[type="submit"]');
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const formData = new FormData(form);
-
     const originalText = submitBtn.value;
 
     submitBtn.value = "Sending...";
     submitBtn.disabled = true;
 
     try {
-        // Netlify expects the form submission to be sent to '/' with POST
         const response = await fetch("/", {
             method: "POST",
-            body: formData
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData).toString()
         });
 
         if (response.ok) {
@@ -108,6 +107,13 @@ form.addEventListener('submit', async (e) => {
     }
 });
 
+
+
+const response = await fetch("/", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: new URLSearchParams(formData).toString()
+});
 
 /// CODE FOR SKILLS SCROLL DISPLAY 
 
