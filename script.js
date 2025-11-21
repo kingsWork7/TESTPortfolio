@@ -34,85 +34,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // MY CONTACT FORM // 
 
-// const form = document.getElementById('form');
-// const submitBtn = form.querySelector('button[type="submit"]');
-
-// form.addEventListener('submit', async (e) => {
-//     e.preventDefault();
-
-//     const formData = new FormData(form);
-//     formData.append("access_key", "a1ccab64-f758-438b-bc68-8f9d7c746525");
-
-//     const originalText = submitBtn.textContent;
-
-//     submitBtn.textContent = "Sending...";
-//     submitBtn.disabled = true;
-
-//     try {
-//         const response = await fetch("https://api.web3forms.com/submit", {
-//             method: "POST",
-//             body: formData
-//         });
-
-//         const data = await response.json();
-
-//         if (response.ok) {
-//             alert("Success! Your message has been sent.");
-//             form.reset();
-//         } else {
-//             alert("Error: " + data.message);
-//         }
-
-//     } catch (error) {
-//         alert("Something went wrong. Please try again.");
-//     } finally {
-//         submitBtn.textContent = originalText;
-//         submitBtn.disabled = false;
-//     }
-// });
-
-
-const form = document.getElementById('contact-form');
-const submitBtn = form.querySelector('input[type="submit"]');
+const form = document.getElementById('form');
+const submitBtn = form.querySelector('button[type="submit"]');
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const formData = new FormData(form);
-    const originalText = submitBtn.value;
+    formData.append("access_key", "a1ccab64-f758-438b-bc68-8f9d7c746525");
 
-    submitBtn.value = "Sending...";
+    const originalText = submitBtn.textContent;
+
+    submitBtn.textContent = "Sending...";
     submitBtn.disabled = true;
 
     try {
-        const response = await fetch("/", {
+        const response = await fetch("https://api.web3forms.com/submit", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams(formData).toString()
+            body: formData
         });
+
+        const data = await response.json();
 
         if (response.ok) {
             alert("Success! Your message has been sent.");
             form.reset();
         } else {
-            alert("Error: Could not submit form.");
+            alert("Error: " + data.message);
         }
 
     } catch (error) {
         alert("Something went wrong. Please try again.");
-        console.error(error);
     } finally {
-        submitBtn.value = originalText;
+        submitBtn.textContent = originalText;
         submitBtn.disabled = false;
     }
-});
-
-
-
-const response = await fetch("/", {
-  method: "POST",
-  headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  body: new URLSearchParams(formData).toString()
 });
 
 /// CODE FOR SKILLS SCROLL DISPLAY 
@@ -243,11 +199,37 @@ window.addEventListener('load', () => {
 //   });
 // });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("project-modal");
+  const modalBody = document.getElementById("modal-body");
+  const closeBtn = document.querySelector(".modal-close");
 
+  const links = [
+    document.getElementById("project1-link"),
+    document.getElementById("project2-link"),
+    document.getElementById("project3-link")
+  ];
 
+  links.forEach(link => {
+    link.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const res = await fetch(link.getAttribute("href"));
+      const html = await res.text();
+      const div = document.createElement("div");
+      div.innerHTML = html;
 
+      modalBody.innerHTML = "";
+      const content = div.querySelector(".hero, .project-details, .gallery, .git");
+      if(content) modalBody.appendChild(content.cloneNode(true));
 
+      modal.style.display = "flex";
+    });
+  });
 
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+});
 
 
 
